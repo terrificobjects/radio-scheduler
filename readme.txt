@@ -2,7 +2,7 @@
 Contributors:      Terrific Objects
 Tags:              block
 Tested up to:      6.1
-Stable tag:        0.0.1
+Stable tag:        0.0.2
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -10,7 +10,7 @@ This block will have a calendar that integrates an AzuraCast schedule into the F
 
 == Description ==
 
-This plugin uses FullCalendar to create different calendars that have schedule data from an AzuraCast schedule in them. 
+This plugin uses FullCalendar to create different calendars that have schedule data from an AzuraCast schedule in them. It can also create schedules directly within WordPress.
 
 == Installation ==
 
@@ -21,4 +21,8 @@ This plugin uses FullCalendar to create different calendars that have schedule d
 
 = 0.0.1 =
 * Release
+
+= 0.0.2 =
+Added Dashboard menu for Schedule Management
+Added plugin activation code for table creation
 

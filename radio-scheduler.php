@@ -7,6 +7,9 @@
  * Text Domain: radio-scheduler
  */
 
+ // Include all of our Ajax handlers
+require_once plugin_dir_path(__FILE__) . 'ajax-handlers.php';
+
  // When we first activate the plugin, create database table
 register_activation_hook(__FILE__, 'create_events_table');
 function create_events_table() {
@@ -45,10 +48,55 @@ function add_schedule_menu() {
     add_submenu_page('schedule', 'Schedules', 'Schedules', 'manage_options', 'schedules', 'schedules_page_display');
 }
 
-// Still need to output FullCalendar and SweetAlert2 on the Schedules page
 function schedules_page_display() {
-
+    ?>
+    <div id="calendar"></div>
+    <?php
 }
+
+function radio_scheduler_enqueue_admin_scripts($hook_suffix) {
+    if ($hook_suffix !== 'toplevel_page_schedule' && $hook_suffix !== 'schedule_page_schedules') {
+        return;
+    }
+
+    // Enqueue FullCalendar and SweetAlert2 for admin page
+    wp_enqueue_script(
+        'fullcalendar-global',
+        'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js',
+        array(),
+        '6.1.14',
+        true
+    );
+
+    wp_enqueue_script(
+        'sweetalert2',
+        'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js',
+        array(),
+        '11.1.9',
+        true
+    );
+
+    wp_enqueue_style(
+        'sweetalert2-style',
+        'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css',
+        array(),
+        '11.1.9'
+    );
+
+    wp_enqueue_script(
+        'radio-scheduler-admin',
+        plugins_url('admin.js', __FILE__),
+        array('jquery'),
+        filemtime(plugin_dir_path(__FILE__) . 'admin.js'),
+        true
+    );
+
+    wp_localize_script('radio-scheduler-admin', 'radioSchedulerAjax', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce'    => wp_create_nonce('radio_scheduler_nonce')
+    ));
+}
+add_action('admin_enqueue_scripts', 'radio_scheduler_enqueue_admin_scripts');
 
 function radio_scheduler_block_assets() {
     // Enqueue the block's editor script
