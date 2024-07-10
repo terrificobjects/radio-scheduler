@@ -1,0 +1,19 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "create-block/radio-scheduler",
+	"version": "0.0.1",
+	"title": "Radio Scheduler",
+	"category": "widgets",
+	"icon": "calendar",
+	"description": "Set up radio station scheduling using a simple calendar.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "radio-scheduler",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}
