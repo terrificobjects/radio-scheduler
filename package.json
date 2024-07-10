@@ -1,6 +1,6 @@
 {
   "name": "radio-scheduler",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "A plugin to schedule radio events using FullCalendar.",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "start": "wp-scripts start src/index.js src/frontend.js"
   },
   "keywords": [],
-  "author": "Arufa",
+  "author": "terrificobjects",
   "license": "GPL-2.0-or-later",
   "dependencies": {
     "@fullcalendar/core": "^6.1.14",
