@@ -25,4 +25,5 @@ This plugin uses FullCalendar to create different calendars that have schedule d
 = 0.0.2 =
 Added Dashboard menu for Schedule Management
 Added plugin activation code for table creation
-
+Added fullpage selection calendar for schedule event creation to admin page
+Set up Ajax for rudimentary event data manipulation and storage
