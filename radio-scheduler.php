@@ -9,6 +9,7 @@
 
  // Include all of our Ajax handlers
 require_once plugin_dir_path(__FILE__) . 'ajax-handlers.php';
+require_once plugin_dir_path(__FILE__) . 'fetch-events.php';
 
  // When we first activate the plugin, create database table
 register_activation_hook(__FILE__, 'create_events_table');
