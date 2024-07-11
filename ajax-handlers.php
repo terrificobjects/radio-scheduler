@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-// Handle the request to create an event
+// Handle our request to create an event
 function radio_scheduler_create_event() {
     check_ajax_referer('radio_scheduler_nonce', 'nonce');
 
@@ -38,7 +38,7 @@ function radio_scheduler_create_event() {
 }
 add_action('wp_ajax_radio_scheduler_create_event', 'radio_scheduler_create_event');
 
-// Handle the request to fetch all events for calendar
+// Handle request to fetch all events
 function radio_scheduler_get_events() {
     check_ajax_referer('radio_scheduler_nonce', 'nonce');
 

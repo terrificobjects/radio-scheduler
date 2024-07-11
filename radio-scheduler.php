@@ -7,11 +7,12 @@
  * Text Domain: radio-scheduler
  */
 
- // Include all of our Ajax handlers
+// Include all of our Ajax handlers
 require_once plugin_dir_path(__FILE__) . 'ajax-handlers.php';
 require_once plugin_dir_path(__FILE__) . 'fetch-events.php';
+require_once plugin_dir_path(__FILE__) . 'event-manager.php';
 
- // When we first activate the plugin, create database table
+// When we first activate the plugin, create database table
 register_activation_hook(__FILE__, 'create_events_table');
 function create_events_table() {
     global $wpdb;
@@ -42,11 +43,17 @@ function create_events_table() {
 add_action('admin_menu', 'add_schedule_menu');
 
 function add_schedule_menu() {
-    // Gotta use __return_null as a placeholder for the menu page callback
-    add_menu_page('Schedule', 'Schedule', 'manage_options', 'schedule', '__return_null', 'dashicons-calendar-alt', 6);
-    
-    // Schedules submenu page
-    add_submenu_page('schedule', 'Schedules', 'Schedules', 'manage_options', 'schedules', 'schedules_page_display');
+    // Add main menu item
+    add_menu_page('Events', 'Events', 'manage_options', 'events', 'events_page_display', 'dashicons-calendar-alt', 6);
+
+    // Add sub-menu item
+    add_submenu_page('events', 'Schedules', 'Schedules', 'manage_options', 'schedules', 'schedules_page_display');
+}
+
+function events_page_display() {
+    ?>
+    <div id="event-list"></div>
+    <?php
 }
 
 function schedules_page_display() {
@@ -56,11 +63,11 @@ function schedules_page_display() {
 }
 
 function radio_scheduler_enqueue_admin_scripts($hook_suffix) {
-    if ($hook_suffix !== 'toplevel_page_schedule' && $hook_suffix !== 'schedule_page_schedules') {
+    if ($hook_suffix !== 'toplevel_page_events' && $hook_suffix !== 'events_page_schedules') {
         return;
     }
 
-    // Enqueue FullCalendar and SweetAlert2 for admin page
+    // Enqueue FullCalendar and SweetAlert2 for admin
     wp_enqueue_script(
         'fullcalendar-global',
         'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js',
@@ -92,7 +99,20 @@ function radio_scheduler_enqueue_admin_scripts($hook_suffix) {
         true
     );
 
+    wp_enqueue_script(
+        'radio-scheduler-event-manager',
+        plugins_url('event-manager.js', __FILE__),
+        array('jquery'),
+        filemtime(plugin_dir_path(__FILE__) . 'event-manager.js'),
+        true
+    );
+
     wp_localize_script('radio-scheduler-admin', 'radioSchedulerAjax', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce'    => wp_create_nonce('radio_scheduler_nonce')
+    ));
+
+    wp_localize_script('radio-scheduler-event-manager', 'radioSchedulerAjax', array(
         'ajax_url' => admin_url('admin-ajax.php'),
         'nonce'    => wp_create_nonce('radio_scheduler_nonce')
     ));
@@ -100,7 +120,7 @@ function radio_scheduler_enqueue_admin_scripts($hook_suffix) {
 add_action('admin_enqueue_scripts', 'radio_scheduler_enqueue_admin_scripts');
 
 function radio_scheduler_block_assets() {
-    // Enqueue the block's editor script
+    // Enqueue a block's editor script
     wp_enqueue_script(
         'radio-scheduler-block-editor',
         plugins_url('build/index.js', __FILE__),
@@ -117,7 +137,7 @@ function radio_scheduler_block_assets() {
         true
     );
 
-    // Enqueue our block's frontend script
+    // Enqueue block's frontend script
     wp_enqueue_script(
         'radio-scheduler-block-frontend',
         plugins_url('build/frontend.js', __FILE__),
