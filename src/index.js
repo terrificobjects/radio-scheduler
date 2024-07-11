@@ -3,7 +3,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 registerBlockType('arufa/radio-scheduler', {
     title: 'Radio Scheduler',
@@ -11,16 +11,34 @@ registerBlockType('arufa/radio-scheduler', {
     category: 'widgets',
     edit: () => {
         const blockProps = useBlockProps();
+        const [events, setEvents] = useState([]);
+
+        useEffect(() => {
+            fetch('/wp-json/radio-scheduler/v1/events')
+                .then(response => response.text())
+                .then(text => {
+                    try {
+                        const data = JSON.parse(text);
+                        //uncomment below to log events in console fo debug
+                        //console.log('Fetched events:', data);
+                        setEvents(data);
+                    } catch (error) {
+                        console.error('Error parsing JSON:', error, 'Response text:', text);
+                        alert('Failed to fetch events. Check console for details.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching events:', error);
+                    alert('Failed to fetch events. Check console for details.');
+                });
+        }, []);
 
         return (
             <div {...blockProps}>
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin]}
                     initialView="dayGridMonth"
-                    events={[
-                        { title: 'Event 1', date: '2024-07-01' },
-                        { title: 'Event 2', date: '2024-07-02' }
-                    ]}
+                    events={events}
                 />
             </div>
         );
