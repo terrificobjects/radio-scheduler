@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name: Radio Scheduler
  * Description: A plugin to schedule radio events using the npm FullCalendar react library.
@@ -14,7 +15,8 @@ require_once plugin_dir_path(__FILE__) . 'event-manager.php';
 
 // When we first activate the plugin, create database table
 register_activation_hook(__FILE__, 'create_events_table');
-function create_events_table() {
+function create_events_table()
+{
     global $wpdb;
     $table_name = $wpdb->prefix . 'to_events_scheduler';
     $charset_collate = $wpdb->get_charset_collate();
@@ -42,7 +44,8 @@ function create_events_table() {
 // Let's add our admin menu here
 add_action('admin_menu', 'add_schedule_menu');
 
-function add_schedule_menu() {
+function add_schedule_menu()
+{
     // Add main menu item
     add_menu_page('Events', 'Events', 'manage_options', 'events', 'events_page_display', 'dashicons-calendar-alt', 6);
 
@@ -50,19 +53,62 @@ function add_schedule_menu() {
     add_submenu_page('events', 'Schedules', 'Schedules', 'manage_options', 'schedules', 'schedules_page_display');
 }
 
-function events_page_display() {
-    ?>
+function events_page_display()
+{
+?>
+    <style>
+        #event-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-header {
+            font-weight: bold;
+            display: flex;
+            border-bottom: 2px solid #000;
+            padding: 10px 0;
+        }
+
+        .event-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .event-column {
+            flex: 1;
+            padding: 0 5px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+
+        .event-column input,
+        .event-column select {
+            width: 100%;
+        }
+
+        .event-column button {
+            margin-left: 5px;
+        }
+    </style>
+    <div class="event-manager-title">
+        <h1>Event Manager</h1>
+    </div>
     <div id="event-list"></div>
-    <?php
+<?php
 }
 
-function schedules_page_display() {
-    ?>
+function schedules_page_display()
+{
+?>
     <div id="calendar"></div>
-    <?php
+<?php
 }
 
-function radio_scheduler_enqueue_admin_scripts($hook_suffix) {
+function radio_scheduler_enqueue_admin_scripts($hook_suffix)
+{
     if ($hook_suffix !== 'toplevel_page_events' && $hook_suffix !== 'events_page_schedules') {
         return;
     }
@@ -119,7 +165,8 @@ function radio_scheduler_enqueue_admin_scripts($hook_suffix) {
 }
 add_action('admin_enqueue_scripts', 'radio_scheduler_enqueue_admin_scripts');
 
-function radio_scheduler_block_assets() {
+function radio_scheduler_block_assets()
+{
     // Enqueue a block's editor script
     wp_enqueue_script(
         'radio-scheduler-block-editor',

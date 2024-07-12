@@ -24,24 +24,45 @@ jQuery(document).ready(function($) {
         const eventList = $('#event-list');
         eventList.empty();
 
+        // Add column titles
+        const headerRow = $(`
+            <div class="event-item event-header">
+                <div class="event-column">Event Name</div>
+                <div class="event-column">Date</div>
+                <div class="event-column">Start Time</div>
+                <div class="event-column">End Time</div>
+                <div class="event-column">Artist</div>
+                <div class="event-column">Genre</div>
+                <div class="event-column">URL</div>
+                <div class="event-column">Station</div>
+                <div class="event-column">Status</div>
+                <div class="event-column">Actions</div>
+            </div>
+        `);
+        eventList.append(headerRow);
+
         events.forEach(event => {
             const eventElement = $(`
                 <div class="event-item" data-id="${event.ID}">
-                    <input type="text" class="event-name" value="${event.EventName}" />
-                    <input type="date" class="event-date" value="${event.EventDate}" />
-                    <input type="time" class="event-start-time" value="${event.EventStartTime}" />
-                    <input type="time" class="event-end-time" value="${event.EventEndTime}" />
-                    <input type="text" class="event-artist" value="${event.EventArtist}" />
-                    <input type="text" class="event-genre" value="${event.EventGenre}" />
-                    <input type="url" class="event-url" value="${event.EventURL}" />
-                    <input type="text" class="event-station" value="${event.EventStation}" />
-                    <select class="event-meta1">
-                        <option value="enabled" ${event.EventMeta1 === 'enabled' ? 'selected' : ''}>Enabled</option>
-                        <option value="disabled" ${event.EventMeta1 === 'disabled' ? 'selected' : ''}>Disabled</option>
-                        <option value="cancelled" ${event.EventMeta1 === 'cancelled' ? 'selected' : ''}>Cancelled</option>
-                    </select>
-                    <button class="update-event">Update</button>
-                    <button class="delete-event">Delete</button>
+                    <div class="event-column"><input type="text" class="event-name" value="${event.EventName}" /></div>
+                    <div class="event-column"><input type="date" class="event-date" value="${event.EventDate}" /></div>
+                    <div class="event-column"><input type="time" class="event-start-time" value="${event.EventStartTime}" /></div>
+                    <div class="event-column"><input type="time" class="event-end-time" value="${event.EventEndTime}" /></div>
+                    <div class="event-column"><input type="text" class="event-artist" value="${event.EventArtist}" /></div>
+                    <div class="event-column"><input type="text" class="event-genre" value="${event.EventGenre}" /></div>
+                    <div class="event-column"><input type="url" class="event-url" value="${event.EventURL}" /></div>
+                    <div class="event-column"><input type="text" class="event-station" value="${event.EventStation}" /></div>
+                    <div class="event-column">
+                        <select class="event-meta1">
+                            <option value="enabled" ${event.EventMeta1 === 'enabled' ? 'selected' : ''}>Enabled</option>
+                            <option value="disabled" ${event.EventMeta1 === 'disabled' ? 'selected' : ''}>Disabled</option>
+                            <option value="cancelled" ${event.EventMeta1 === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="event-column">
+                        <button class="update-event">Update</button>
+                        <button class="delete-event">Delete</button>
+                    </div>
                 </div>
             `);
 
