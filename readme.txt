@@ -32,3 +32,4 @@ Set up Ajax for rudimentary event data manipulation and storage
 Added Event Manager page in Dashboard
 Rewrote some code for new page
 Connected created events to frontend calendar display
+Added block styles and attributes
