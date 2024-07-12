@@ -9,9 +9,9 @@
  */
 
 // Include all of our Ajax handlers
-require_once plugin_dir_path(__FILE__) . 'ajax-handlers.php';
-require_once plugin_dir_path(__FILE__) . 'fetch-events.php';
-require_once plugin_dir_path(__FILE__) . 'event-manager.php';
+require_once plugin_dir_path(__FILE__) . 'includes/php/ajax-handlers.php';
+require_once plugin_dir_path(__FILE__) . 'includes/php/fetch-events.php';
+require_once plugin_dir_path(__FILE__) . 'includes/php/event-manager.php';
 
 // When we first activate the plugin, create database table
 register_activation_hook(__FILE__, 'create_events_table');
@@ -139,17 +139,17 @@ function radio_scheduler_enqueue_admin_scripts($hook_suffix)
 
     wp_enqueue_script(
         'radio-scheduler-admin',
-        plugins_url('admin.js', __FILE__),
+        plugins_url('includes/js/admin.js', __FILE__),
         array('jquery'),
-        filemtime(plugin_dir_path(__FILE__) . 'admin.js'),
+        filemtime(plugin_dir_path(__FILE__) . 'includes/js/admin.js'),
         true
     );
 
     wp_enqueue_script(
         'radio-scheduler-event-manager',
-        plugins_url('event-manager.js', __FILE__),
+        plugins_url('includes/js/event-manager.js', __FILE__),
         array('jquery'),
-        filemtime(plugin_dir_path(__FILE__) . 'event-manager.js'),
+        filemtime(plugin_dir_path(__FILE__) . 'includes/js/event-manager.js'),
         true
     );
 
