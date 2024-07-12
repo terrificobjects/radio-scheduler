@@ -35,7 +35,10 @@ function create_events_table()
         EventMeta1 text,
         EventMeta2 text,
         EventMeta3 text,
-        PRIMARY KEY  (ID)
+        PRIMARY KEY  (ID),
+        INDEX event_date_idx (EventDate),
+        INDEX event_name_idx (EventName(100)),
+        INDEX user_id_idx (UserID)
     ) $charset_collate;";
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     dbDelta($sql);
