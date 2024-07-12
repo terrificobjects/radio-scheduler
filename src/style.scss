@@ -1,12 +1,13 @@
-/**
- * The following styles get applied both on the front of your site
- * and in the editor.
- *
- * Replace them with your own styles or remove the file completely.
- */
-
 .wp-block-create-block-radio-scheduler {
-	background-color: #21759b;
-	color: #fff;
-	padding: 2px;
+    margin: 0 !important; /* Ensure no margin is applied */
+    padding: 0; /* Ensure no extra padding */
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #000000;
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+}
+
+.wp-block-create-block-radio-scheduler.is-full-width {
+    width: 100% !important; /* Ensure full width */
 }

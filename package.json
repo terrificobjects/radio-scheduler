@@ -1,6 +1,6 @@
 {
   "name": "radio-scheduler",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A plugin to schedule radio events using FullCalendar.",
   "main": "index.js",
   "scripts": {

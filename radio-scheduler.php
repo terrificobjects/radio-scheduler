@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Radio Scheduler
  * Description: A plugin to schedule radio events using the npm FullCalendar react library.
- * Version: 0.0.2
+ * Version: 0.0.3
  * Author: Terrific Objects
  * Text Domain: radio-scheduler
  */

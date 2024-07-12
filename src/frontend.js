@@ -5,10 +5,25 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 
 document.addEventListener('DOMContentLoaded', function() {
-    const calendarElements = document.querySelectorAll('.wp-block-arufa-radio-scheduler');
+    const calendarElements = document.querySelectorAll('.wp-block-create-block-radio-scheduler');
     
     calendarElements.forEach(element => {
-        ReactDOM.render(<CalendarComponent />, element);
+        const style = window.getComputedStyle(element);
+        const padding = style.padding;
+        const margin = '0px'; // Explicitly set margin to 0px
+        const backgroundColor = style.backgroundColor;
+        const color = style.color;
+        const fontSize = style.fontSize;
+        const width = style.width;
+        //const height = style.height;
+        const fullWidth = element.classList.contains('is-full-width');
+
+        ReactDOM.render(
+            <div style={{ padding, margin, backgroundColor, color, fontSize, width: fullWidth ? '100%' : width, boxSizing: 'border-box' }}>
+                <CalendarComponent />
+            </div>,
+            element
+        );
     });
 });
 
@@ -30,4 +45,3 @@ const CalendarComponent = () => {
         />
     );
 };
-

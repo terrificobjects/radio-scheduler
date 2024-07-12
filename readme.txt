@@ -2,7 +2,7 @@
 Contributors:      Terrific Objects
 Tags:              block
 Tested up to:      6.1
-Stable tag:        0.0.2
+Stable tag:        0.0.3
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,3 +27,8 @@ Added Dashboard menu for Schedule Management
 Added plugin activation code for table creation
 Added fullpage selection calendar for schedule event creation to admin page
 Set up Ajax for rudimentary event data manipulation and storage
+
+= 0.0.3 =
+Added Event Manager page in Dashboard
+Rewrote some code for new page
+Connected created events to frontend calendar display

@@ -1,50 +1,160 @@
 import { registerBlockType } from '@wordpress/blocks';
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, BlockControls, AlignmentToolbar, PanelColorSettings } from '@wordpress/block-editor';
+import { PanelBody, RangeControl, TextControl, ToggleControl } from '@wordpress/components';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import React, { useState, useEffect } from 'react';
 
-registerBlockType('arufa/radio-scheduler', {
+registerBlockType('create-block/radio-scheduler', {
     title: 'Radio Scheduler',
     icon: 'calendar-alt',
     category: 'widgets',
-    edit: () => {
-        const blockProps = useBlockProps();
+    attributes: {
+        align: {
+            type: 'string',
+            default: 'center'
+        },
+        backgroundColor: {
+            type: 'string',
+            default: '#ffffff'
+        },
+        textColor: {
+            type: 'string',
+            default: '#000000'
+        },
+        padding: {
+            type: 'number',
+            default: 20
+        },
+        margin: {
+            type: 'number',
+            default: 0
+        },
+        fontSize: {
+            type: 'number',
+            default: 16
+        },
+        width: {
+            type: 'string',
+            default: '100%'
+        },
+        fullWidth: {
+            type: 'boolean',
+            default: false
+        }
+    },
+    edit: ({ attributes, setAttributes }) => {
+        const blockProps = useBlockProps({
+            style: {
+                textAlign: attributes.align,
+                backgroundColor: attributes.backgroundColor,
+                color: attributes.textColor,
+                padding: `${attributes.padding}px`,
+                margin: `${attributes.margin}px`,
+                fontSize: `${attributes.fontSize}px`,
+                width: attributes.fullWidth ? '100%' : attributes.width,
+                //height: attributes.height,
+                boxSizing: 'border-box'
+            },
+            className: attributes.fullWidth ? 'is-full-width' : ''
+        });
+
         const [events, setEvents] = useState([]);
 
         useEffect(() => {
             fetch('/wp-json/radio-scheduler/v1/events')
-                .then(response => response.text())
-                .then(text => {
-                    try {
-                        const data = JSON.parse(text);
-                        //uncomment below to log events in console fo debug
-                        //console.log('Fetched events:', data);
-                        setEvents(data);
-                    } catch (error) {
-                        console.error('Error parsing JSON:', error, 'Response text:', text);
-                        alert('Failed to fetch events. Check console for details.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching events:', error);
-                    alert('Failed to fetch events. Check console for details.');
-                });
+                .then(response => response.json())
+                .then(data => setEvents(data))
+                .catch(error => console.error('Error fetching events:', error));
         }, []);
 
         return (
-            <div {...blockProps}>
-                <FullCalendar
-                    plugins={[dayGridPlugin, timeGridPlugin]}
-                    initialView="dayGridMonth"
-                    events={events}
-                />
-            </div>
+            <>
+                <InspectorControls>
+                    <PanelBody title="Block Settings">
+                        <ToggleControl
+                            label="Full Width"
+                            checked={attributes.fullWidth}
+                            onChange={(value) => setAttributes({ fullWidth: value })}
+                        />
+                        <RangeControl
+                            label="Padding"
+                            value={attributes.padding}
+                            onChange={(value) => setAttributes({ padding: value })}
+                            min={0}
+                            max={100}
+                        />
+                        <RangeControl
+                            label="Margin"
+                            value={attributes.margin}
+                            onChange={(value) => setAttributes({ margin: value })}
+                            min={0}
+                            max={100}
+                        />
+                        <RangeControl
+                            label="Font Size"
+                            value={attributes.fontSize}
+                            onChange={(value) => setAttributes({ fontSize: value })}
+                            min={10}
+                            max={50}
+                        />
+                        <TextControl
+                            label="Width"
+                            value={attributes.width}
+                            onChange={(value) => setAttributes({ width: value })}
+                            disabled={attributes.fullWidth}
+                        />
+                    </PanelBody>
+                    <PanelColorSettings
+                        title="Color Settings"
+                        initialOpen={true}
+                        colorSettings={[
+                            {
+                                value: attributes.backgroundColor,
+                                onChange: (color) => setAttributes({ backgroundColor: color }),
+                                label: 'Background Color'
+                            },
+                            {
+                                value: attributes.textColor,
+                                onChange: (color) => setAttributes({ textColor: color }),
+                                label: 'Text Color'
+                            }
+                        ]}
+                    />
+                </InspectorControls>
+                <BlockControls>
+                    <AlignmentToolbar
+                        value={attributes.align}
+                        onChange={(align) => setAttributes({ align })}
+                    />
+                </BlockControls>
+                <div {...blockProps}>
+                    <FullCalendar
+                        plugins={[dayGridPlugin, timeGridPlugin]}
+                        initialView="dayGridMonth"
+                        events={events}
+                    />
+                </div>
+            </>
         );
     },
-    save: () => {
-        const blockProps = useBlockProps.save();
-        return <div {...blockProps} className="wp-block-arufa-radio-scheduler"></div>;
-    },
+    save: ({ attributes }) => {
+        const blockProps = useBlockProps.save({
+            style: {
+                textAlign: attributes.align,
+                backgroundColor: attributes.backgroundColor,
+                color: attributes.textColor,
+                padding: `${attributes.padding}px`,
+                margin: '0px', // Ensure no margin is applied in saved content
+                fontSize: `${attributes.fontSize}px`,
+                width: attributes.fullWidth ? '100%' : attributes.width,
+                //height: attributes.height,
+                boxSizing: 'border-box'
+            },
+            className: attributes.fullWidth ? 'is-full-width' : ''
+        });
+
+        return <div {...blockProps} className="wp-block-create-block-radio-scheduler"></div>;
+    }
 });
