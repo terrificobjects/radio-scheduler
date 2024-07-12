@@ -1,0 +1,13 @@
+.wp-block-terrificobjects-radio-station-embed {
+    margin: 0 !important; /* Ensure no margin is applied */
+    padding: 0; /* Ensure no extra padding */
+    font-size: 16px;
+    background-color: #ffffff;
+    color: #000000;
+    width: 100%;
+    box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+}
+
+.wp-block-terrificobjects-radio-station-embed.is-full-width {
+    width: 100% !important; /* Ensure full width */
+}

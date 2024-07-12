@@ -173,9 +173,35 @@ function radio_scheduler_block_assets()
     // Enqueue a block's editor script
     wp_enqueue_script(
         'radio-scheduler-block-editor',
-        plugins_url('build/index.js', __FILE__),
+        plugins_url('build/radio-scheduler/index.js', __FILE__),
         array('wp-blocks', 'wp-element', 'wp-editor'),
-        filemtime(plugin_dir_path(__FILE__) . 'build/index.js')
+        filemtime(plugin_dir_path(__FILE__) . 'build/radio-scheduler/index.js')
+    );
+
+    // Enqueue block's frontend script
+    wp_enqueue_script(
+        'radio-scheduler-block-frontend',
+        plugins_url('build/radio-scheduler/frontend.js', __FILE__),
+        array('wp-element'),
+        filemtime(plugin_dir_path(__FILE__) . 'build/radio-scheduler/frontend.js'),
+        true
+    );
+
+    // Enqueue a block's editor script
+    wp_enqueue_script(
+        'radio-station-embed-block-editor',
+        plugins_url('build/radio-station-embed/index.js', __FILE__),
+        array('wp-blocks', 'wp-element', 'wp-editor'),
+        filemtime(plugin_dir_path(__FILE__) . 'build/radio-station-embed/index.js')
+    );
+    
+    // Enqueue block's frontend script
+    wp_enqueue_script(
+        'radio-station-embed-block-frontend',
+        plugins_url('build/radio-station-embed/frontend.js', __FILE__),
+        array('wp-element'),
+        filemtime(plugin_dir_path(__FILE__) . 'build/radio-station-embed/frontend.js'),
+        true
     );
 
     // Enqueue FullCalendar for both editor and frontend
@@ -184,15 +210,6 @@ function radio_scheduler_block_assets()
         'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js',
         array(),
         '6.1.14',
-        true
-    );
-
-    // Enqueue block's frontend script
-    wp_enqueue_script(
-        'radio-scheduler-block-frontend',
-        plugins_url('build/frontend.js', __FILE__),
-        array('wp-element'),
-        filemtime(plugin_dir_path(__FILE__) . 'build/frontend.js'),
         true
     );
 }
