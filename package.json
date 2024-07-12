@@ -1,11 +1,12 @@
 {
   "name": "radio-scheduler",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "A plugin to schedule radio events using FullCalendar.",
   "main": "index.js",
   "files": [
     "build",
     "src",
+    "node_modules",
     "includes",
     "radio-scheduler.php",
     "readme.txt"

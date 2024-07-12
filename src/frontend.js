@@ -5,7 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 
 document.addEventListener('DOMContentLoaded', function() {
-    const calendarElements = document.querySelectorAll('.wp-block-create-block-radio-scheduler');
+    const calendarElements = document.querySelectorAll('.wp-block-terrificobjects-radio-scheduler');
     
     calendarElements.forEach(element => {
         const style = window.getComputedStyle(element);

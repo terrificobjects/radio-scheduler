@@ -15,6 +15,6 @@ export default function save({ attributes }) {
     });
 
     return (
-        <div {...blockProps} className="wp-block-create-block-radio-scheduler"></div>
+        <div {...blockProps} className="wp-block-terrificobjects-radio-scheduler"></div>
     );
 }

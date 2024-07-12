@@ -1,8 +1,8 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
-    "name": "create-block/radio-scheduler",
-    "version": "0.0.3",
+    "name": "terrificobjects/radio-scheduler",
+    "version": "0.1.0",
     "title": "Radio Scheduler",
     "category": "widgets",
     "icon": "calendar",

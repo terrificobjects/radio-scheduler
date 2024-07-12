@@ -6,7 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import React, { useState, useEffect } from 'react';
 
-registerBlockType('create-block/radio-scheduler', {
+registerBlockType('terrificobjects/radio-scheduler', {
     title: 'Radio Scheduler',
     icon: 'calendar-alt',
     category: 'widgets',
@@ -155,6 +155,6 @@ registerBlockType('create-block/radio-scheduler', {
             className: attributes.fullWidth ? 'is-full-width' : ''
         });
 
-        return <div {...blockProps} className="wp-block-create-block-radio-scheduler"></div>;
+        return <div {...blockProps} className="wp-block-terrificobjects-radio-scheduler"></div>;
     }
 });

@@ -16,9 +16,9 @@ function fetch_radio_scheduler_events() {
     global $wpdb;
 
     $query = "
-        SELECT * FROM wp_to_events_scheduler
+        SELECT * FROM {$wpdb->prefix}to_events_scheduler
         WHERE (EventMeta1 IS NULL OR EventMeta1 NOT IN ('cancelled', 'deleted'))
-    ";
+    ";    
 
     $results = $wpdb->get_results($query);
 

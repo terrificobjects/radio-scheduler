@@ -2,7 +2,7 @@
 Contributors:      Terrific Objects
 Tags:              block
 Tested up to:      6.1
-Stable tag:        0.0.3
+Stable tag:        0.1.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,3 +33,8 @@ Added Event Manager page in Dashboard
 Rewrote some code for new page
 Connected created events to frontend calendar display
 Added block styles and attributes
+
+= 0.1.0 =
+Updated packages to latest for react and @wordpress/scripts
+Organized files into simpler structure
+Updated namespaces and cleaned up
