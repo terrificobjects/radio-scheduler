@@ -2,7 +2,7 @@
 Contributors:      Terrific Objects
 Tags:              block
 Tested up to:      6.1
-Stable tag:        0.1.0
+Stable tag:        0.1.1
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,3 +38,8 @@ Added block styles and attributes
 Updated packages to latest for react and @wordpress/scripts
 Organized files into simpler structure
 Updated namespaces and cleaned up
+
+= 0.1.1 =
+Removed unnecessary view.js files from src directories
+Added SweetAlert2 packages to blocks
+Added custom calendar and SweetAlert2 colors to Editor
