@@ -36,6 +36,7 @@ jQuery(document).ready(function($) {
                 <div class="event-column">URL</div>
                 <div class="event-column">Station</div>
                 <div class="event-column">Status</div>
+                <div class="event-column">Event Color</div>
                 <div class="event-column">Actions</div>
             </div>
         `);
@@ -59,12 +60,16 @@ jQuery(document).ready(function($) {
                             <option value="cancelled" ${event.EventMeta1 === 'cancelled' ? 'selected' : ''}>Cancelled</option>
                         </select>
                     </div>
+                    <div class="event-column"><input type="text" class="event-color" value="${event.EventColor}" /></div>
                     <div class="event-column">
                         <button class="update-event">Update</button>
                         <button class="delete-event">Delete</button>
                     </div>
                 </div>
             `);
+
+            // Initialize the WordPress color picker
+            eventElement.find('.event-color').wpColorPicker();
 
             eventElement.find('.update-event').on('click', function() {
                 updateEvent(eventElement);
@@ -91,6 +96,7 @@ jQuery(document).ready(function($) {
             EventURL: eventElement.find('.event-url').val(),
             EventStation: eventElement.find('.event-station').val(),
             EventMeta1: eventElement.find('.event-meta1').val(),
+            EventColor: eventElement.find('.event-color').val(),
             nonce: radioSchedulerAjax.nonce
         };
 

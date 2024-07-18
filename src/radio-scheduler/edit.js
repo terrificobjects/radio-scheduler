@@ -2,6 +2,10 @@ import { __ } from '@wordpress/i18n';
 import { useBlockProps, InspectorControls, ColorPalette, BlockControls, AlignmentToolbar, PanelColorSettings } from '@wordpress/block-editor';
 import { PanelBody, RangeControl, TextControl } from '@wordpress/components';
 import './editor.scss';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import React, { useState, useEffect } from 'react';
 
 export default function Edit({ attributes, setAttributes }) {
     const blockProps = useBlockProps({
@@ -13,9 +17,24 @@ export default function Edit({ attributes, setAttributes }) {
             margin: `${attributes.margin}px`,
             fontSize: `${attributes.fontSize}px`,
             width: attributes.width,
-            //height: attributes.height
+            boxSizing: 'border-box'
         }
     });
+
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+        fetch('/wp-json/radio-scheduler/v1/events')
+            .then(response => response.json())
+            .then(data => {
+                setEvents(data.map(event => ({
+                    ...event,
+                    backgroundColor: event.EventColor || attributes.eventColor,
+                    borderColor: event.EventColor || attributes.eventColor
+                })));
+            })
+            .catch(error => console.error('Error fetching events:', error));
+    }, [attributes.eventColor]);
 
     return (
         <>
@@ -47,7 +66,6 @@ export default function Edit({ attributes, setAttributes }) {
                         value={attributes.width}
                         onChange={(value) => setAttributes({ width: value })}
                     />
-
                 </PanelBody>
                 <PanelColorSettings
                     title="Color Settings"
@@ -64,9 +82,14 @@ export default function Edit({ attributes, setAttributes }) {
                             label: 'Text Color'
                         },
                         {
-                            value: attributes.buttonColor,
-                            onChange: (color) => setAttributes({ buttonColor: color }),
+                            value: attributes.buttonSwalColor,
+                            onChange: (color) => setAttributes({ buttonSwalColor: color }),
                             label: 'Button Color'
+                        },
+                        {
+                            value: attributes.eventColor,
+                            onChange: (color) => setAttributes({ eventColor: color }),
+                            label: 'Event Color'
                         }
                     ]}
                 />
@@ -78,7 +101,12 @@ export default function Edit({ attributes, setAttributes }) {
                 />
             </BlockControls>
             <div {...blockProps}>
-                { __('Radio Scheduler – hello from the editor!', 'radio-scheduler') }
+                <FullCalendar
+                    plugins={[dayGridPlugin, timeGridPlugin]}
+                    initialView="dayGridMonth"
+                    events={events}
+                    eventBackgroundColor={attributes.eventColor}
+                />
             </div>
         </>
     );

@@ -34,6 +34,7 @@ function update_event() {
         'EventURL' => esc_url_raw($_POST['EventURL']),
         'EventStation' => sanitize_text_field($_POST['EventStation']),
         'EventMeta1' => sanitize_text_field($_POST['EventMeta1']),
+        'EventColor' => sanitize_hex_color($_POST['EventColor']),
     ];
 
     $wpdb->update(
@@ -61,3 +62,4 @@ function delete_event() {
 
     wp_send_json_success();
 }
+

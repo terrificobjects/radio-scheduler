@@ -72,9 +72,15 @@ registerBlockType('terrificobjects/radio-scheduler', {
         useEffect(() => {
             fetch('/wp-json/radio-scheduler/v1/events')
                 .then(response => response.json())
-                .then(data => setEvents(data))
+                .then(data => {
+                    setEvents(data.map(event => ({
+                        ...event,
+                        backgroundColor: event.EventColor || attributes.eventColor,
+                        borderColor: event.EventColor || attributes.eventColor
+                    })));
+                })
                 .catch(error => console.error('Error fetching events:', error));
-        }, []);
+        }, [attributes.eventColor]);
 
         return (
             <>
