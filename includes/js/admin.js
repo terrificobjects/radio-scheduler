@@ -1,4 +1,4 @@
-// Add custom CSS for the color picker
+// We need custom CSS for color picker
 const style = document.createElement('style');
 style.innerHTML = `
     .swal2-container .wp-picker-container {
