@@ -52,6 +52,14 @@
         "width": {
             "type": "string",
             "default": "800px"
+        },
+        "buttonSwalColor": {
+            "type": "string",
+            "default": "#3085d6"
+        },
+        "eventColor": {
+            "type": "string",
+            "default": "#007bff"
         }
     },
     "textdomain": "radio-scheduler",

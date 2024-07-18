@@ -42,6 +42,14 @@ registerBlockType('terrificobjects/radio-scheduler', {
         fullWidth: {
             type: 'boolean',
             default: false
+        },
+        buttonSwalColor: {
+            type: 'string',
+            default: '#3085d6'
+        },
+        eventColor: {
+            type: 'string',
+            default: '#007bff'
         }
     },
     edit: ({ attributes, setAttributes }) => {
@@ -54,7 +62,6 @@ registerBlockType('terrificobjects/radio-scheduler', {
                 margin: `${attributes.margin}px`,
                 fontSize: `${attributes.fontSize}px`,
                 width: attributes.fullWidth ? '100%' : attributes.width,
-                //height: attributes.height,
                 boxSizing: 'border-box'
             },
             className: attributes.fullWidth ? 'is-full-width' : ''
@@ -119,6 +126,16 @@ registerBlockType('terrificobjects/radio-scheduler', {
                                 value: attributes.textColor,
                                 onChange: (color) => setAttributes({ textColor: color }),
                                 label: 'Text Color'
+                            },
+                            {
+                                value: attributes.buttonSwalColor,
+                                onChange: (color) => setAttributes({ buttonSwalColor: color }),
+                                label: 'Button Color'
+                            },
+                            {
+                                value: attributes.eventColor,
+                                onChange: (color) => setAttributes({ eventColor: color }),
+                                label: 'Event Color'
                             }
                         ]}
                     />
@@ -146,12 +163,15 @@ registerBlockType('terrificobjects/radio-scheduler', {
                 backgroundColor: attributes.backgroundColor,
                 color: attributes.textColor,
                 padding: `${attributes.padding}px`,
-                margin: '0px', // Ensure no margin is applied in saved content
+                margin: '0px',
                 fontSize: `${attributes.fontSize}px`,
                 width: attributes.fullWidth ? '100%' : attributes.width,
-                //height: attributes.height,
                 boxSizing: 'border-box'
             },
+            'data-background-color': attributes.backgroundColor,
+            'data-text-color': attributes.textColor,
+            'data-button-swal-color': attributes.buttonSwalColor,
+            'data-event-color': attributes.eventColor,
             className: attributes.fullWidth ? 'is-full-width' : ''
         });
 

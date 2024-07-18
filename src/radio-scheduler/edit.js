@@ -62,6 +62,11 @@ export default function Edit({ attributes, setAttributes }) {
                             value: attributes.textColor,
                             onChange: (color) => setAttributes({ textColor: color }),
                             label: 'Text Color'
+                        },
+                        {
+                            value: attributes.buttonColor,
+                            onChange: (color) => setAttributes({ buttonColor: color }),
+                            label: 'Button Color'
                         }
                     ]}
                 />

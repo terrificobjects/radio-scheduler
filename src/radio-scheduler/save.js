@@ -9,9 +9,12 @@ export default function save({ attributes }) {
             padding: `${attributes.padding}px`,
             margin: `${attributes.margin}px`,
             fontSize: `${attributes.fontSize}px`,
-            width: attributes.width,
-            height: attributes.height
-        }
+            width: attributes.width
+        },
+        'data-background-color': attributes.backgroundColor,
+        'data-text-color': attributes.textColor,
+        'data-button-swal-color': attributes.buttonSwalColor,
+        'data-event-color': attributes.eventColor
     });
 
     return (
