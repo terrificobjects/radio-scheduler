@@ -116,6 +116,9 @@ function radio_scheduler_enqueue_admin_scripts($hook_suffix)
         return;
     }
 
+    wp_enqueue_style('wp-color-picker');
+    wp_enqueue_script('wp-color-picker');
+
     // Enqueue FullCalendar and SweetAlert2 for admin
     wp_enqueue_script(
         'fullcalendar-global',

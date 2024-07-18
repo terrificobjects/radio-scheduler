@@ -19,9 +19,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     '<input id="event-genre" class="swal2-input" placeholder="Genre">' +
                     '<input id="event-url" class="swal2-input" placeholder="URL">' +
                     '<input id="event-station" class="swal2-input" placeholder="Station">' +
+                    '<br>' +
+                    '<input id="event-color" class="swal2-input" placeholder="Event Color">' +
+                    '<br>' +
                     '<input id="event-start-time" class="swal2-input" type="time" placeholder="Start Time">' +
                     '<input id="event-end-time" class="swal2-input" type="time" placeholder="End Time">',
                 showCancelButton: true,
+                didOpen: () => {
+                    // Initialize the WordPress color picker
+                    jQuery('#event-color').wpColorPicker();
+                },
                 confirmButtonText: 'Create',
                 preConfirm: () => {
                     const eventName = document.getElementById('event-name').value;
@@ -29,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const eventGenre = document.getElementById('event-genre').value;
                     const eventURL = document.getElementById('event-url').value;
                     const eventStation = document.getElementById('event-station').value;
+                    const eventColor = document.getElementById('event-color').value;
                     const eventStartTime = document.getElementById('event-start-time').value;
                     const eventEndTime = document.getElementById('event-end-time').value;
                     return {
@@ -37,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         eventGenre: eventGenre,
                         eventURL: eventURL,
                         eventStation: eventStation,
+                        eventColor: eventColor,
                         eventStartTime: eventStartTime,
                         eventEndTime: eventEndTime,
                         eventDate: formattedDate
@@ -49,7 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     const eventData = {
                         title: result.value.eventName,
                         start: start,
-                        end: end
+                        end: end,
+                        backgroundColor: result.value.eventColor,
+                        borderColor: result.value.eventColor
                     };
                     calendar.addEvent(eventData);
 
@@ -62,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             eventGenre: result.value.eventGenre,
                             eventURL: result.value.eventURL,
                             eventStation: result.value.eventStation,
+                            eventColor: result.value.eventColor,
                             start: start,
                             end: end,
                             eventDate: result.value.eventDate
