@@ -28,12 +28,13 @@ function fetch_radio_scheduler_events() {
     }
 
     // Log
-    error_log('Raw query results: ' . print_r($results, true));
+    error_log('Raw query results: ' . json_encode($results, true));
 
     $events = array_map(function ($result) {
         return [
             'title' => $result->EventName,
             'date'  => $result->EventDate,
+            'EventColor' => $result->EventColor,
         ];
     }, $results);
 

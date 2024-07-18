@@ -1,3 +1,19 @@
+// Add custom CSS for the color picker
+const style = document.createElement('style');
+style.innerHTML = `
+    .swal2-container .wp-picker-container {
+        margin: 0 auto;
+        text-align: center;
+    }
+    .swal2-container .wp-picker-container .wp-picker-input-wrap {
+        display: none;
+    }
+    .swal2-container .wp-picker-container .wp-color-picker {
+        width: 100%;
+    }
+`;
+document.head.appendChild(style);
+
 document.addEventListener('DOMContentLoaded', function() {
     const calendarEl = document.getElementById('calendar');
     const calendar = new FullCalendar.Calendar(calendarEl, {
@@ -19,9 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     '<input id="event-genre" class="swal2-input" placeholder="Genre">' +
                     '<input id="event-url" class="swal2-input" placeholder="URL">' +
                     '<input id="event-station" class="swal2-input" placeholder="Station">' +
-                    '<br>' +
+                    '<div class="swal2-input" id="color-picker-container" style="border:none; box-shadow:none;">' +
                     '<input id="event-color" class="swal2-input" placeholder="Event Color">' +
-                    '<br>' +
+                    '</div>' +
                     '<input id="event-start-time" class="swal2-input" type="time" placeholder="Start Time">' +
                     '<input id="event-end-time" class="swal2-input" type="time" placeholder="End Time">',
                 showCancelButton: true,

@@ -28,6 +28,7 @@ function radio_scheduler_create_event() {
                 'EventGenre'    => sanitize_text_field($data['eventGenre']),
                 'EventURL'      => esc_url_raw($data['eventURL']),
                 'EventStation'  => sanitize_text_field($data['eventStation']),
+                'EventColor'    => sanitize_hex_color($data['eventColor']),
             )
         );
 
@@ -59,7 +60,8 @@ function radio_scheduler_get_events() {
         $events[] = array(
             'title' => $row->EventName,
             'start' => $row->EventDate . 'T' . $row->EventStartTime,
-            'end' => $row->EventDate . 'T' . $row->EventEndTime
+            'end' => $row->EventDate . 'T' . $row->EventEndTime,
+            'eventColor' => $row->EventColor
         );
     }
 

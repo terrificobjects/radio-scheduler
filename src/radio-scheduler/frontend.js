@@ -8,7 +8,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 
 const MySwal = withReactContent(Swal);
 
-const CalendarComponent = ({ backgroundColor, textColor, buttonSwalColor, eventColor }) => {
+const CalendarComponent = ({ backgroundColor, textColor, buttonSwalColor, defaultEventColor }) => {
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
@@ -17,12 +17,12 @@ const CalendarComponent = ({ backgroundColor, textColor, buttonSwalColor, eventC
             .then(data => {
                 setEvents(data.map(event => ({
                     ...event,
-                    backgroundColor: eventColor,
-                    borderColor: eventColor
+                    backgroundColor: event.EventColor || defaultEventColor,
+                    borderColor: event.EventColor || defaultEventColor,
                 })));
             })
             .catch(error => console.error('Error fetching events:', error));
-    }, [eventColor]);
+    }, [defaultEventColor]);
 
     const handleEventClick = (info) => {
         console.log("Button Swal Color (inside handleEventClick):", buttonSwalColor);
@@ -43,6 +43,7 @@ const CalendarComponent = ({ backgroundColor, textColor, buttonSwalColor, eventC
             initialView="dayGridMonth"
             events={events}
             eventClick={handleEventClick}
+            displayEventTime={true} // Ensure event time is displayed
         />
     );
 };
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         ReactDOM.render(
             <div style={{ padding, margin, backgroundColor, color, fontSize, width: fullWidth ? '100%' : width, boxSizing: 'border-box' }}>
-                <CalendarComponent backgroundColor={backgroundColor} textColor={color} buttonSwalColor={buttonSwalColor} eventColor={eventColor || '#007bff'} />
+                <CalendarComponent backgroundColor={backgroundColor} textColor={color} buttonSwalColor={buttonSwalColor} defaultEventColor={eventColor || '#007bff'} />
             </div>,
             element
         );

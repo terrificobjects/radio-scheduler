@@ -32,6 +32,7 @@ function create_events_table()
         EventGenre tinytext,
         EventURL varchar(255),
         EventStation tinytext,
+        EventColor varchar(8),
         EventMeta1 text,
         EventMeta2 text,
         EventMeta3 text,
