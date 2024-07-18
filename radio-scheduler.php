@@ -40,7 +40,7 @@ function create_events_table()
         INDEX event_name_idx (EventName(100)),
         INDEX user_id_idx (UserID)
     ) $charset_collate;";
-    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+    require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
     dbDelta($sql);
 }
 
@@ -58,7 +58,7 @@ function add_schedule_menu()
 
 function events_page_display()
 {
-?>
+    ?>
     <style>
         #event-list {
             display: flex;
@@ -100,14 +100,14 @@ function events_page_display()
         <h1>Event Manager</h1>
     </div>
     <div id="event-list"></div>
-<?php
+    <?php
 }
 
 function schedules_page_display()
 {
-?>
+    ?>
     <div id="calendar"></div>
-<?php
+    <?php
 }
 
 function radio_scheduler_enqueue_admin_scripts($hook_suffix)
@@ -158,13 +158,15 @@ function radio_scheduler_enqueue_admin_scripts($hook_suffix)
 
     wp_localize_script('radio-scheduler-admin', 'radioSchedulerAjax', array(
         'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce'    => wp_create_nonce('radio_scheduler_nonce')
-    ));
+        'nonce' => wp_create_nonce('radio_scheduler_nonce')
+    )
+    );
 
     wp_localize_script('radio-scheduler-event-manager', 'radioSchedulerAjax', array(
         'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce'    => wp_create_nonce('radio_scheduler_nonce')
-    ));
+        'nonce' => wp_create_nonce('radio_scheduler_nonce')
+    )
+    );
 }
 add_action('admin_enqueue_scripts', 'radio_scheduler_enqueue_admin_scripts');
 
@@ -182,7 +184,7 @@ function radio_scheduler_block_assets()
     wp_enqueue_script(
         'radio-scheduler-block-frontend',
         plugins_url('build/radio-scheduler/frontend.js', __FILE__),
-        array('wp-element'),
+        array('wp-element', 'fullcalendar-global', 'sweetalert2'),
         filemtime(plugin_dir_path(__FILE__) . 'build/radio-scheduler/frontend.js'),
         true
     );
@@ -194,7 +196,7 @@ function radio_scheduler_block_assets()
         array('wp-blocks', 'wp-element', 'wp-editor'),
         filemtime(plugin_dir_path(__FILE__) . 'build/radio-station-embed/index.js')
     );
-    
+
     // Enqueue block's frontend script
     wp_enqueue_script(
         'radio-station-embed-block-frontend',
@@ -212,5 +214,31 @@ function radio_scheduler_block_assets()
         '6.1.14',
         true
     );
+
 }
 add_action('enqueue_block_assets', 'radio_scheduler_block_assets');
+
+function frontend_block_js_scripts() {
+    wp_enqueue_script(
+        'radio-scheduler-event-display',
+        plugins_url('includes/js/event-display.js', __FILE__),
+        array('jquery'),
+        filemtime(plugin_dir_path(__FILE__) . 'includes/js/event-display.js'),
+        false
+    );
+    wp_enqueue_script(
+        'sweetalert2',
+        'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js',
+        array(),
+        '11.12.2',
+        false
+    );
+
+    wp_enqueue_style(
+        'sweetalert2-style',
+        'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css',
+        array(),
+        '11.12.2'
+    );
+}
+add_action('wp_enqueue_scripts', 'frontend_block_js_scripts');

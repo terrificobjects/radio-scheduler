@@ -5,6 +5,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import React, { useState, useEffect } from 'react';
+import Swal from 'sweetalert2';
 
 registerBlockType('terrificobjects/radio-scheduler', {
     title: 'Radio Scheduler',
@@ -54,7 +55,6 @@ registerBlockType('terrificobjects/radio-scheduler', {
                 margin: `${attributes.margin}px`,
                 fontSize: `${attributes.fontSize}px`,
                 width: attributes.fullWidth ? '100%' : attributes.width,
-                //height: attributes.height,
                 boxSizing: 'border-box'
             },
             className: attributes.fullWidth ? 'is-full-width' : ''
@@ -63,11 +63,27 @@ registerBlockType('terrificobjects/radio-scheduler', {
         const [events, setEvents] = useState([]);
 
         useEffect(() => {
+            console.log('Fetching events...');
             fetch('/wp-json/radio-scheduler/v1/events')
                 .then(response => response.json())
-                .then(data => setEvents(data))
+                .then(data => {
+                    console.log('Fetched events:', data);
+                    setEvents(data);
+                })
                 .catch(error => console.error('Error fetching events:', error));
         }, []);
+
+        const handleEventClick = (info) => {
+            console.log('Event clicked:', info.event);
+            Swal.fire({
+                title: info.event.title,
+                text: 'Event details',
+                icon: 'info',
+                confirmButtonText: 'Close'
+            });
+        };
+
+        console.log('Rendering FullCalendar with events:', events);
 
         return (
             <>
@@ -134,6 +150,7 @@ registerBlockType('terrificobjects/radio-scheduler', {
                         plugins={[dayGridPlugin, timeGridPlugin]}
                         initialView="dayGridMonth"
                         events={events}
+                        eventClick={handleEventClick}
                     />
                 </div>
             </>
@@ -149,7 +166,6 @@ registerBlockType('terrificobjects/radio-scheduler', {
                 margin: '0px', // Ensure no margin is applied in saved content
                 fontSize: `${attributes.fontSize}px`,
                 width: attributes.fullWidth ? '100%' : attributes.width,
-                //height: attributes.height,
                 boxSizing: 'border-box'
             },
             className: attributes.fullWidth ? 'is-full-width' : ''
