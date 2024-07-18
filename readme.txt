@@ -43,3 +43,9 @@ Updated namespaces and cleaned up
 Removed unnecessary view.js files from src directories
 Added SweetAlert2 packages to blocks
 Added custom calendar and SweetAlert2 colors to Editor
+
+= 0.1.2 =
+Added custom color picker for individual events
+Added EventColor column to plugin custom database table init
+Set up Editor to display custom colors on calendar in edit mode
+Added custom color editor to Events Manager admin page
