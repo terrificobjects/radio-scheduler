@@ -144,5 +144,85 @@ jQuery(document).ready(function($) {
         });
     }
 
+    function addNewEvent() {
+        const newEventElement = $(`
+            <div class="event-item">
+                <div class="event-column"><input type="text" class="event-name" placeholder="Event Name" /></div>
+                <div class="event-column"><input type="date" class="event-date" /></div>
+                <div class="event-column"><input type="time" class="event-start-time" /></div>
+                <div class="event-column"><input type="time" class="event-end-time" /></div>
+                <div class="event-column"><input type="text" class="event-artist" placeholder="Artist" /></div>
+                <div class="event-column"><input type="text" class="event-genre" placeholder="Genre" /></div>
+                <div class="event-column"><input type="url" class="event-url" placeholder="URL" /></div>
+                <div class="event-column"><input type="text" class="event-station" placeholder="Station" /></div>
+                <div class="event-column">
+                    <select class="event-meta1">
+                        <option value="enabled">Enabled</option>
+                        <option value="disabled">Disabled</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="event-column"><input type="text" class="event-color" placeholder="Event Color" /></div>
+                <div class="event-column">
+                    <button class="save-new-event">Save</button>
+                    <button class="cancel-new-event">Cancel</button>
+                </div>
+            </div>
+        `);
+
+        // Initialize the WordPress color picker
+        newEventElement.find('.event-color').wpColorPicker();
+
+        newEventElement.find('.save-new-event').on('click', function() {
+            saveNewEvent(newEventElement);
+        });
+
+        newEventElement.find('.cancel-new-event').on('click', function() {
+            newEventElement.remove();
+        });
+
+        $('#event-list').append(newEventElement);
+    }
+
+    function saveNewEvent(eventElement) {
+        const eventData = {
+            EventName: eventElement.find('.event-name').val(),
+            EventDate: eventElement.find('.event-date').val(),
+            EventStartTime: eventElement.find('.event-start-time').val(),
+            EventEndTime: eventElement.find('.event-end-time').val(),
+            EventArtist: eventElement.find('.event-artist').val(),
+            EventGenre: eventElement.find('.event-genre').val(),
+            EventURL: eventElement.find('.event-url').val(),
+            EventStation: eventElement.find('.event-station').val(),
+            EventMeta1: eventElement.find('.event-meta1').val(),
+            EventColor: eventElement.find('.event-color').val(),
+            nonce: radioSchedulerAjax.nonce
+        };
+
+        $.ajax({
+            url: radioSchedulerAjax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'add_event',
+                ...eventData
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('Event added successfully.');
+                    fetchEvents();
+                } else {
+                    alert('Failed to add event.');
+                }
+            },
+            error: function() {
+                alert('Error adding event.');
+            }
+        });
+    }
+
+    $('#add-new-event').on('click', function() {
+        addNewEvent();
+    });
+
     fetchEvents();
 });

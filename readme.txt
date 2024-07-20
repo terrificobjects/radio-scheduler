@@ -2,7 +2,7 @@
 Contributors:      Terrific Objects
 Tags:              block
 Tested up to:      6.1
-Stable tag:        0.1.1
+Stable tag:        0.1.3
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,3 +49,10 @@ Added custom color picker for individual events
 Added EventColor column to plugin custom database table init
 Set up Editor to display custom colors on calendar in edit mode
 Added custom color editor to Events Manager admin page
+
+= 0.1.3 =
+Cleaned up event creation popup/added new CSS
+Added "Add New Event" button to Event Manager admin page
+Improved popup styling for desktop
+Added event data to block output for each event
+Added more event data to events rest route

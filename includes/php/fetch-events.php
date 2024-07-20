@@ -33,8 +33,17 @@ function fetch_radio_scheduler_events() {
     $events = array_map(function ($result) {
         return [
             'title' => $result->EventName,
-            'date'  => $result->EventDate,
+            'date' => $result->EventDate,
             'EventColor' => $result->EventColor,
+            'extendedProps' => [
+                'EventDate' => $result->EventDate,
+                'EventStartTime' => $result->EventStartTime,
+                'EventEndTime' => $result->EventEndTime,
+                'EventStation' => $result->EventStation,
+                'EventArtist' => $result->EventArtist,
+                'EventGenre' => $result->EventGenre,
+                'EventURL' => $result->EventURL,
+            ]
         ];
     }, $results);
 

@@ -1,4 +1,4 @@
-// We need custom CSS for color picker
+// We need custom CSS for color picker and input alignment
 const style = document.createElement('style');
 style.innerHTML = `
     .swal2-container .wp-picker-container {
@@ -10,6 +10,38 @@ style.innerHTML = `
     }
     .swal2-container .wp-picker-container .wp-color-picker {
         width: 100%;
+    }
+    .input-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;'
+        width: 100%;
+    }
+    .input-group .swal2-input {
+        width: calc(33% - 20px);
+        margin-bottom: 10px;
+    }
+    .input-container {
+        margin-bottom: 10px;
+    }
+    #color-picker-container .swal2-input {
+        width: 100%;
+        display: inline-flex;
+    }
+    .scheduler-title {
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 0;
+    }
+    .swal2-popup {
+        width: 65%;
+    }
+    #event-name {
+        width: 65%;
+    }
+    #event-start-time, #event-end-time {
+        width: 50%;
     }
 `;
 document.head.appendChild(style);
@@ -29,17 +61,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
             Swal.fire({
                 title: 'Create Event',
-                html:
-                    '<input id="event-name" class="swal2-input" placeholder="Event Name">' +
-                    '<input id="event-artist" class="swal2-input" placeholder="Artist">' +
-                    '<input id="event-genre" class="swal2-input" placeholder="Genre">' +
-                    '<input id="event-url" class="swal2-input" placeholder="URL">' +
-                    '<input id="event-station" class="swal2-input" placeholder="Station">' +
-                    '<div class="swal2-input" id="color-picker-container" style="border:none; box-shadow:none;">' +
-                    '<input id="event-color" class="swal2-input" placeholder="Event Color">' +
-                    '</div>' +
-                    '<input id="event-start-time" class="swal2-input" type="time" placeholder="Start Time">' +
-                    '<input id="event-end-time" class="swal2-input" type="time" placeholder="End Time">',
+                html: `
+                <div class="input-container">
+                    <input id="event-name" class="swal2-input" placeholder="Event Name">
+                </div>
+                <div class="input-group">
+                    <input id="event-artist" class="swal2-input" placeholder="Artist">
+                    <input id="event-genre" class="swal2-input" placeholder="Genre">
+                </div>
+                <div class="input-group">
+                    <input id="event-url" class="swal2-input" placeholder="URL">
+                    <input id="event-station" class="swal2-input" placeholder="Station">
+                </div>
+                <div class="input-group">
+                    <div class="input-container" id="color-picker-container" style="border:none; box-shadow:none;">
+                        <p class="scheduler-title">Select the calendar's event color:</p>&nbsp; <input id="event-color" class="swal2-input" placeholder="Event Color">
+                    </div>
+                    <div class="input-container">
+                        <p class="scheduler-title">Start time:</p>&nbsp; <input id="event-start-time" class="swal2-input" type="time" placeholder="Start Time">
+                    </div>
+                    <div class="input-container">
+                        <p class="scheduler-title">End time:</p>&nbsp; <input id="event-end-time" class="swal2-input" type="time" placeholder="End Time">
+                    </div>
+                </div>
+            `,
                 showCancelButton: true,
                 didOpen: () => {
                     // Initialize the WordPress color picker

@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Radio Scheduler
  * Description: A plugin to schedule radio events using the npm FullCalendar react library.
- * Version: 0.1.2
+ * Version: 0.1.3
  * Author: Terrific Objects
  * Text Domain: radio-scheduler
  */
@@ -57,52 +57,52 @@ function add_schedule_menu()
     add_submenu_page('events', 'Schedules', 'Schedules', 'manage_options', 'schedules', 'schedules_page_display');
 }
 
-function events_page_display()
-{
-?>
-    <style>
-        #event-list {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .event-header {
-            font-weight: bold;
-            display: flex;
-            border-bottom: 2px solid #000;
-            padding: 10px 0;
-        }
-
-        .event-item {
-            display: flex;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .event-column {
-            flex: 1;
-            padding: 0 5px;
-            text-align: left;
-            display: flex;
-            align-items: center;
-        }
-
-        .event-column input,
-        .event-column select {
-            width: 100%;
-        }
-
-        .event-column button {
-            margin-left: 5px;
-        }
-    </style>
-    <div class="event-manager-title">
-        <h1>Event Manager</h1>
-    </div>
-    <div id="event-list"></div>
-<?php
-}
+function events_page_display() {
+    ?>
+        <style>
+            #event-list {
+                display: flex;
+                flex-direction: column;
+            }
+    
+            .event-header {
+                font-weight: bold;
+                display: flex;
+                border-bottom: 2px solid #000;
+                padding: 10px 0;
+            }
+    
+            .event-item {
+                display: flex;
+                align-items: center;
+                padding: 10px 0;
+                border-bottom: 1px solid #ccc;
+            }
+    
+            .event-column {
+                flex: 1;
+                padding: 0 5px;
+                text-align: left;
+                display: flex;
+                align-items: center;
+            }
+    
+            .event-column input,
+            .event-column select {
+                width: 100%;
+            }
+    
+            .event-column button {
+                margin-left: 5px;
+            }
+        </style>
+        <div class="event-manager-title">
+            <h1>Event Manager</h1>
+        </div>
+        <button id="add-new-event">Add New Event</button>
+        <div id="event-list"></div>
+    <?php
+}    
 
 function schedules_page_display()
 {

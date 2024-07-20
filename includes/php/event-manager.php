@@ -6,6 +6,7 @@ if (!defined('ABSPATH')) {
 add_action('wp_ajax_fetch_events', 'fetch_events');
 add_action('wp_ajax_update_event', 'update_event');
 add_action('wp_ajax_delete_event', 'delete_event');
+add_action('wp_ajax_add_event', 'add_event');
 
 function fetch_events() {
     global $wpdb;
@@ -63,3 +64,30 @@ function delete_event() {
     wp_send_json_success();
 }
 
+function add_event() {
+    global $wpdb;
+    check_ajax_referer('radio_scheduler_nonce', 'nonce');
+
+    $event_data = [
+        'EventName' => sanitize_text_field($_POST['EventName']),
+        'EventDate' => sanitize_text_field($_POST['EventDate']),
+        'EventStartTime' => sanitize_text_field($_POST['EventStartTime']),
+        'EventEndTime' => sanitize_text_field($_POST['EventEndTime']),
+        'EventArtist' => sanitize_text_field($_POST['EventArtist']),
+        'EventGenre' => sanitize_text_field($_POST['EventGenre']),
+        'EventURL' => esc_url_raw($_POST['EventURL']),
+        'EventStation' => sanitize_text_field($_POST['EventStation']),
+        'EventMeta1' => sanitize_text_field($_POST['EventMeta1']),
+        'EventColor' => sanitize_hex_color($_POST['EventColor']),
+        'DateCreated' => current_time('mysql'),
+        'UserID' => get_current_user_id()
+    ];
+
+    $wpdb->insert("{$wpdb->prefix}to_events_scheduler", $event_data, array_fill(0, count($event_data), '%s'));
+
+    if ($wpdb->insert_id) {
+        wp_send_json_success();
+    } else {
+        wp_send_json_error();
+    }
+}
